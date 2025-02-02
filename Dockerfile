@@ -40,6 +40,7 @@ RUN dpkg --add-architecture i386 && \
         bison \
         rpm2cpio cpio \
         zstd \
+        qemu-user \
         tzdata && \
     rm -rf /var/lib/apt/list/*
 
