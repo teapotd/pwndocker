@@ -41,6 +41,7 @@ RUN dpkg --add-architecture i386 && \
         rpm2cpio cpio \
         zstd \
         qemu-user \
+        elfutils \
         tzdata && \
     rm -rf /var/lib/apt/list/*
 
