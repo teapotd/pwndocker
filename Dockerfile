@@ -108,6 +108,8 @@ COPY --from=skysider/glibc_builder32:2.35 /glibc/2.35/32 /glibc/2.35/32
 COPY --from=skysider/glibc_builder64:2.36 /glibc/2.36/64 /glibc/2.36/64
 COPY --from=skysider/glibc_builder32:2.36 /glibc/2.36/32 /glibc/2.36/32
 
+RUN echo "source ~/.gdb.conf" >> ~/.gdbinit
+COPY gdb.conf /root/.gdb.conf
 COPY tmux.conf /root/.tmux.conf
 
 WORKDIR /ctf/work/
