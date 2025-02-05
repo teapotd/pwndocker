@@ -76,6 +76,10 @@ RUN git clone --depth 1 https://github.com/niklasb/libc-database.git libc-databa
     cd libc-database && ./get ubuntu debian || echo "/libc-database/" > ~/.libcdb_path && \
     rm -rf /tmp/*
 
+RUN git clone --depth 1 https://github.com/zolutal/pwn_gadget ~/pwn_gadget && \
+    python3 -m pip install --no-cache-dir ~/pwn_gadget/ && \
+    sed -i '1isource ~/pwn_gadget/pwn_gadget.py' ~/.gdbinit
+
 RUN echo "source ~/.gdb.conf" >> ~/.gdbinit
 COPY gdb.conf /root/.gdb.conf
 COPY tmux.conf /root/.tmux.conf
