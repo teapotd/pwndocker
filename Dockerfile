@@ -80,7 +80,7 @@ RUN echo "source ~/.gdb.conf" >> ~/.gdbinit
 COPY gdb.conf /root/.gdb.conf
 COPY tmux.conf /root/.tmux.conf
 
-WORKDIR /ctf/work/
+WORKDIR /ctf/
 ENV PWNDBG_NO_AUTOUPDATE=1
 
 CMD ["/usr/bin/tmux", "new", "/bin/bash", "-o", "ignoreeof"]
