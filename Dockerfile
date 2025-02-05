@@ -83,4 +83,4 @@ COPY tmux.conf /root/.tmux.conf
 WORKDIR /ctf/work/
 ENV PWNDBG_NO_AUTOUPDATE=1
 
-CMD ["/usr/bin/tmux"]
+CMD ["/usr/bin/tmux", "new", "/bin/bash", "-o", "ignoreeof"]
