@@ -76,39 +76,6 @@ RUN git clone --depth 1 https://github.com/niklasb/libc-database.git libc-databa
     cd libc-database && ./get ubuntu debian || echo "/libc-database/" > ~/.libcdb_path && \
     rm -rf /tmp/*
 
-COPY --from=skysider/glibc_builder64:2.19 /glibc/2.19/64 /glibc/2.19/64
-COPY --from=skysider/glibc_builder32:2.19 /glibc/2.19/32 /glibc/2.19/32
-
-COPY --from=skysider/glibc_builder64:2.23 /glibc/2.23/64 /glibc/2.23/64
-COPY --from=skysider/glibc_builder32:2.23 /glibc/2.23/32 /glibc/2.23/32
-
-COPY --from=skysider/glibc_builder64:2.24 /glibc/2.24/64 /glibc/2.24/64
-COPY --from=skysider/glibc_builder32:2.24 /glibc/2.24/32 /glibc/2.24/32
-
-COPY --from=skysider/glibc_builder64:2.27 /glibc/2.27/64 /glibc/2.27/64
-COPY --from=skysider/glibc_builder32:2.27 /glibc/2.27/32 /glibc/2.27/32
-
-COPY --from=skysider/glibc_builder64:2.28 /glibc/2.28/64 /glibc/2.28/64
-COPY --from=skysider/glibc_builder32:2.28 /glibc/2.28/32 /glibc/2.28/32
-
-COPY --from=skysider/glibc_builder64:2.29 /glibc/2.29/64 /glibc/2.29/64
-COPY --from=skysider/glibc_builder32:2.29 /glibc/2.29/32 /glibc/2.29/32
-
-COPY --from=skysider/glibc_builder64:2.30 /glibc/2.30/64 /glibc/2.30/64
-COPY --from=skysider/glibc_builder32:2.30 /glibc/2.30/32 /glibc/2.30/32
-
-COPY --from=skysider/glibc_builder64:2.33 /glibc/2.33/64 /glibc/2.33/64
-COPY --from=skysider/glibc_builder32:2.33 /glibc/2.33/32 /glibc/2.33/32
-
-COPY --from=skysider/glibc_builder64:2.34 /glibc/2.34/64 /glibc/2.34/64
-COPY --from=skysider/glibc_builder32:2.34 /glibc/2.34/32 /glibc/2.34/32
-
-COPY --from=skysider/glibc_builder64:2.35 /glibc/2.35/64 /glibc/2.35/64
-COPY --from=skysider/glibc_builder32:2.35 /glibc/2.35/32 /glibc/2.35/32
-
-COPY --from=skysider/glibc_builder64:2.36 /glibc/2.36/64 /glibc/2.36/64
-COPY --from=skysider/glibc_builder32:2.36 /glibc/2.36/32 /glibc/2.36/32
-
 RUN echo "source ~/.gdb.conf" >> ~/.gdbinit
 COPY gdb.conf /root/.gdb.conf
 COPY tmux.conf /root/.tmux.conf
