@@ -80,9 +80,15 @@ RUN git clone --depth 1 https://github.com/zolutal/pwn_gadget ~/pwn_gadget && \
     python3 -m pip install --no-cache-dir ~/pwn_gadget/ && \
     sed -i '1isource ~/pwn_gadget/pwn_gadget.py' ~/.gdbinit
 
+RUN apt-get -y update && \
+    apt install -y --fix-missing debuginfod && \
+    rm -rf /var/lib/apt/list/*
+
 RUN echo "source ~/.gdb.conf" >> ~/.gdbinit
+RUN echo "export PATH=/root/scripts:$PATH" >> ~/.bashrc
 COPY gdb.conf /root/.gdb.conf
 COPY tmux.conf /root/.tmux.conf
+COPY scripts /root/scripts
 
 WORKDIR /ctf/
 ENV PWNDBG_NO_AUTOUPDATE=1

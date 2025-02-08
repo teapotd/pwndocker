@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $# != 2 ]]; then
+	echo $0 [elf] [interpreter]
+	exit 1
+fi
+
+patchelf --set-interpreter "$2" "$1" && chmod +x "$1"

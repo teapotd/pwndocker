@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+if [[ $# != 1 ]]; then
+	echo $0 [elf]
+	exit 1
+fi
+
+export DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/ https://debuginfod.debian.net/"
+SYMBOLS=$(debuginfod-find debuginfo "$1")
+eu-unstrip "$1" "$SYMBOLS" -o "$1"
