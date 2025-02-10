@@ -1,6 +1,6 @@
 source ~/pwn_gadget/pwn_gadget.py
 source ~/pwndbg/gdbinit.py
-source ~/Pwngdb/.gdbinit-pwngdb
+source ~/Pwngdb/.gdbinit
 
 set bn-rpc-host host.docker.internal
 
