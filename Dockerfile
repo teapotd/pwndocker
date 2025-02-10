@@ -65,9 +65,9 @@ RUN python3 -m pip install -U pip && \
 
 RUN gem install one_gadget seccomp-tools && rm -rf /var/lib/gems/2.*/cache/*
 
-RUN git clone --depth 1 https://github.com/niklasb/libc-database.git libc-database && \
-    cd libc-database && ./get ubuntu debian || echo "/libc-database/" > ~/.libcdb_path && \
-    rm -rf /tmp/*
+# RUN git clone --depth 1 https://github.com/niklasb/libc-database.git libc-database && \
+#     cd libc-database && ./get ubuntu debian || echo "/libc-database/" > ~/.libcdb_path && \
+#     rm -rf /tmp/*
 
 RUN git clone --depth 1 https://github.com/pwndbg/pwndbg ~/pwndbg && \
     cd ~/pwndbg && chmod +x setup.sh && ./setup.sh
