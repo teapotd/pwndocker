@@ -78,6 +78,8 @@ RUN git clone --depth 1 https://github.com/scwuaptx/Pwngdb.git ~/Pwngdb && \
 RUN git clone --depth 1 https://github.com/zolutal/pwn_gadget ~/pwn_gadget && \
     python3 -m pip install --no-cache-dir ~/pwn_gadget/
 
+RUN git clone --depth 1 https://github.com/jerdna-regeiz/splitmind ~/splitmind
+
 RUN python3 -m compileall /usr/lib/python3 /root
 
 RUN echo "export PATH=/root/scripts:$PATH" >> ~/.bashrc
