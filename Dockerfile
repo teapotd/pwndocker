@@ -42,6 +42,7 @@ RUN dpkg --add-architecture i386 && \
         zstd \
         qemu-user \
         elfutils \
+        debuginfod \
         tzdata && \
     rm -rf /var/lib/apt/list/*
 
@@ -64,29 +65,21 @@ RUN python3 -m pip install -U pip && \
 
 RUN gem install one_gadget seccomp-tools && rm -rf /var/lib/gems/2.*/cache/*
 
-RUN git clone --depth 1 https://github.com/pwndbg/pwndbg && \
-    cd pwndbg && chmod +x setup.sh && ./setup.sh
-
-RUN git clone --depth 1 https://github.com/scwuaptx/Pwngdb.git ~/Pwngdb && \
-    cd ~/Pwngdb && mv .gdbinit .gdbinit-pwngdb && \
-    sed -i "s?source ~/peda/peda.py?# source ~/peda/peda.py?g" .gdbinit-pwngdb && \
-    echo "source ~/Pwngdb/.gdbinit-pwngdb" >> ~/.gdbinit
-
 RUN git clone --depth 1 https://github.com/niklasb/libc-database.git libc-database && \
     cd libc-database && ./get ubuntu debian || echo "/libc-database/" > ~/.libcdb_path && \
     rm -rf /tmp/*
 
+RUN git clone --depth 1 https://github.com/pwndbg/pwndbg ~/pwndbg && \
+    cd ~/pwndbg && chmod +x setup.sh && ./setup.sh
+
+RUN git clone --depth 1 https://github.com/scwuaptx/Pwngdb.git ~/Pwngdb && \
+    cd ~/Pwngdb && sed -i "s?source ~/peda/peda.py?# source ~/peda/peda.py?g" .gdbinit
+
 RUN git clone --depth 1 https://github.com/zolutal/pwn_gadget ~/pwn_gadget && \
-    python3 -m pip install --no-cache-dir ~/pwn_gadget/ && \
-    sed -i '1isource ~/pwn_gadget/pwn_gadget.py' ~/.gdbinit
+    python3 -m pip install --no-cache-dir ~/pwn_gadget/
 
-RUN apt-get -y update && \
-    apt install -y --fix-missing debuginfod && \
-    rm -rf /var/lib/apt/list/*
-
-RUN echo "source ~/.gdb.conf" >> ~/.gdbinit
 RUN echo "export PATH=/root/scripts:$PATH" >> ~/.bashrc
-COPY gdb.conf /root/.gdb.conf
+COPY gdbinit /root/.gdbinit
 COPY tmux.conf /root/.tmux.conf
 COPY scripts /root/scripts
 
