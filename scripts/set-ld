@@ -5,4 +5,4 @@ if [[ $# != 2 ]]; then
 	exit 1
 fi
 
-patchelf --set-interpreter "$2" "$1" && chmod +x "$1"
+chmod +x "$1" "$2" && patchelf --set-interpreter "$2" "$1"
