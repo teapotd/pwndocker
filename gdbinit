@@ -80,7 +80,11 @@ contextoutput('backtrace', right[1], True, 'none')
 contextoutput('threads', right[1], True, 'top')
 contextoutput('expressions', right[1], True, 'top')
 
-gdb.events.exited.connect(lambda x : gdb.execute('quit'))
+def exit_handler(event):
+    if event.inferior == gdb.inferiors()[-1]:
+        gdb.execute('quit')
+
+gdb.events.exited.connect(exit_handler)
 
 end
 
