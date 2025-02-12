@@ -1,29 +1,96 @@
 source ~/pwn_gadget/pwn_gadget.py
 source ~/pwndbg/gdbinit.py
 source ~/Pwngdb/.gdbinit
-source ~/splitmind/gdbinit.py
 
 python
-import splitmind
-(splitmind.Mind()
-	.right('-f', display='backtrace', size='60')
-	.show('threads', banner='top')
-	.show('expressions', banner='top')
-	.above('-f', display='legend', size='30')
-	.show('regs')
-	.show('stack', banner='top')
-	.right(display='code', of='legend', size='88')
-	.right(display='disasm', of='legend', size='50%')
-).build(nobanner=True)
+
+import atexit
+import os
+from pwndbg.commands.context import contextoutput
+from pwndbg.ui import get_window_size
+
+clearing_code = '\x1b[H\x1b[2J'
+
+class TrimmedFileOutput:
+    def __init__(self, *args) -> None:
+        self.args = args
+        self.cur_line = 0
+        self.max_lines = None
+        self.handle = None
+
+    def __enter__(self):
+        self.handle = open(*self.args)
+        self.max_lines = get_window_size(self.handle)[0]
+        return self
+
+    def __exit__(self, *args, **kwargs) -> None:
+        self.handle.close()
+
+    def __hash__(self):
+        return hash(self.args)
+
+    def __eq__(self, other):
+        return isinstance(other, TrimmedFileOutput) and self.args == other.args
+
+    def write(self, data):
+        for i, line in enumerate(data.split('\n')):
+            for j, part in enumerate(line.split(clearing_code)):
+                if j > 0:
+                    self.handle.write(clearing_code)
+                    self.cur_line = 0
+                if self.cur_line >= self.max_lines:
+                    continue
+                if i > 0 and j == 0:
+                    self.handle.write('\n')
+                self.handle.write(part)
+            self.cur_line += 1
+        self.cur_line -= 1
+
+    def flush(self):
+        return self.handle.flush()
+
+    def isatty(self):
+        return self.handle.isatty()
+
+    def fileno(self):
+        return self.handle.fileno()
+
+pwndbg.commands.context.FileOutput = TrimmedFileOutput
+
+def split(flags):
+    cmd = 'setterm --linewrap off; cat -'
+    proc = os.popen(f'tmux split-window -dPF "#{{pane_id}}:#{{pane_tty}}" {flags} "{cmd}"')
+    id, tty = proc.read().strip().split(':')
+    atexit.register(lambda: os.popen(f'tmux kill-pane -t {id}').read())
+    return id, tty
+
+right = split('-fhl 60')
+top_left = split('-fvbl 30')
+top_right = split('-hl 88 -t ' + top_left[0])
+top_middle = split('-hp 50 -t ' + top_left[0])
+
+contextoutput('legend', top_left[1], True, 'none')
+contextoutput('regs', top_left[1], True, 'none')
+contextoutput('stack', top_left[1], True, 'top')
+
+contextoutput('disasm', top_middle[1], True, 'none')
+contextoutput('code', top_right[1], True, 'none')
+
+contextoutput('backtrace', right[1], True, 'none')
+contextoutput('threads', right[1], True, 'top')
+contextoutput('expressions', right[1], True, 'top')
+
 end
 
 set context-sections regs disasm code stack backtrace threads expressions
-set context-disasm-lines 15
+set context-disasm-lines 28
 set context-code-lines 28
-set context-stack-lines 8
+set context-stack-lines 25
 set context-backtrace-lines 25
 set context-max-threads 4
+
 set disasm-annotations off
+set show-compact-regs on
 
 set max-visualize-chunk-size 256
 set hexdump-bytes 256
