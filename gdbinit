@@ -80,6 +80,8 @@ contextoutput('backtrace', right[1], True, 'none')
 contextoutput('threads', right[1], True, 'top')
 contextoutput('expressions', right[1], True, 'top')
 
+gdb.events.exited.connect(lambda x : gdb.execute('quit'))
+
 end
 
 set context-sections regs disasm code stack backtrace threads expressions
