@@ -41,6 +41,7 @@ RUN dpkg --add-architecture i386 && \
         rpm2cpio cpio \
         zstd \
         qemu-user \
+        qemu-system \
         elfutils \
         debuginfod \
         tzdata && \
@@ -77,6 +78,9 @@ RUN git clone --depth 1 https://github.com/scwuaptx/Pwngdb.git ~/Pwngdb && \
 
 RUN git clone --depth 1 https://github.com/zolutal/pwn_gadget ~/pwn_gadget && \
     python3 -m pip install --no-cache-dir ~/pwn_gadget/
+
+RUN git clone --depth 1 https://github.com/marin-m/vmlinux-to-elf.git ~/vmlinux-to-elf && \
+    python3 -m pip install --no-cache-dir ~/vmlinux-to-elf/
 
 RUN python3 -m compileall /usr/lib/python3 /root
 
