@@ -88,6 +88,7 @@ RUN echo "export PATH=/root/scripts:$PATH" >> ~/.bashrc
 COPY gdbinit /root/.gdbinit
 COPY tmux.conf /root/.tmux.conf
 COPY scripts /root/scripts
+COPY gdb-extras /root/gdb-extras
 
 WORKDIR /ctf/
 ENV PWNDBG_NO_AUTOUPDATE=1
