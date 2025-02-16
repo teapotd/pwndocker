@@ -58,18 +58,38 @@ def split(flags):
     atexit.register(lambda: os.popen(f'tmux kill-pane -t {id}').read())
     return id, tty
 
-right = split('-fhl 60')
-top_left = split('-fvbl 30')
-top_right = split('-hl 88 -t ' + top_left[0])
-top_middle = split('-hp 50 -t ' + top_left[0])
+class TmuxLayout(gdb.Command):
+    """Setup tmux split layout."""
+    enabled = False
 
-contextoutput('legend', top_left[1], True, 'none')
-contextoutput('regs', top_left[1], True, 'none')
-contextoutput('stack', top_left[1], True, 'top')
+    def __init__(self):
+        super(TmuxLayout, self).__init__('tmux', gdb.COMMAND_USER)
 
-contextoutput('disasm', top_middle[1], True, 'none')
-contextoutput('code', top_right[1], True, 'none')
+    def invoke(self, args, from_tty):
+        if self.enabled:
+            print('Layout already initialized!')
+            return
 
-contextoutput('backtrace', right[1], True, 'none')
-contextoutput('threads', right[1], True, 'top')
-contextoutput('expressions', right[1], True, 'top')
+        show_src = ('nosrc' not in args)
+
+        right = split('-fhl 60')
+        top_left = split('-fvbl 30')
+        if show_src:
+            top_right = split('-hl 88 -t ' + top_left[0])
+        top_middle = split('-hp 50 -t ' + top_left[0])
+
+        contextoutput('legend', top_left[1], True, 'none')
+        contextoutput('regs', top_left[1], True, 'none')
+        contextoutput('stack', top_left[1], True, 'top')
+
+        contextoutput('disasm', top_middle[1], True, 'none')
+        if show_src:
+            contextoutput('code', top_right[1], True, 'none')
+
+        contextoutput('backtrace', right[1], True, 'none')
+        contextoutput('threads', right[1], True, 'top')
+        contextoutput('expressions', right[1], True, 'top')
+
+        self.enabled = True
+
+TmuxLayout()
