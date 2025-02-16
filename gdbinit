@@ -4,6 +4,7 @@ source ~/Pwngdb/.gdbinit
 
 source ~/gdb-extras/autoexit.py
 source ~/gdb-extras/layout.py
+source ~/gdb-extras/kernel.py
 
 set context-sections regs disasm code stack backtrace threads expressions
 set context-disasm-lines 28
