@@ -40,6 +40,10 @@ class TrimmedFileOutput:
             self.cur_line += 1
         self.cur_line -= 1
 
+    def writelines(self, list):
+        for item in list:
+            self.write(item)
+
     def flush(self):
         return self.handle.flush()
 
