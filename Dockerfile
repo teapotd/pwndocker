@@ -44,11 +44,18 @@ RUN dpkg --add-architecture i386 && \
         qemu-system \
         elfutils \
         debuginfod \
+        musl-tools \
+        bc \
+        flex \
+        libelf-dev \
+        libncurses-dev \
         tzdata && \
     rm -rf /var/lib/apt/list/*
 
 RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 RUN python3 -m pip install -U pip && \
     python3 -m pip install --no-cache-dir \
@@ -62,6 +69,7 @@ RUN python3 -m pip install -U pip && \
         capstone \
         angr \
         pebble \
+        tqdm \
         pwntools
 
 RUN gem install one_gadget seccomp-tools && rm -rf /var/lib/gems/2.*/cache/*
@@ -84,7 +92,7 @@ RUN git clone --depth 1 https://github.com/marin-m/vmlinux-to-elf.git ~/vmlinux-
 
 RUN python3 -m compileall /usr/lib/python3 /root
 
-RUN echo "export PATH=/root/scripts:$PATH" >> ~/.bashrc
+RUN echo "export PATH=/root/scripts:/root/.cargo/bin::$PATH" >> ~/.bashrc
 COPY gdbinit /root/.gdbinit
 COPY tmux.conf /root/.tmux.conf
 COPY scripts /root/scripts
