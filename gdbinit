@@ -14,11 +14,12 @@ set context-backtrace-lines 25
 set context-max-threads 4
 
 set disasm-annotations off
-set show-compact-regs on
+set show-compact-regs off
 
 set max-visualize-chunk-size 256
 set hexdump-bytes 256
 set hexdump-width 16
 
+set exception-verbose on
 set gdb-workaround-stop-event 1
 set bn-rpc-host host.docker.internal
