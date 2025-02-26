@@ -1,11 +1,14 @@
 #!/bin/bash
 set -e
 
-if [[ $# != 1 ]]; then
-	echo $0 [elf]
+if [[ $# == 1 ]]; then
+	export DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/ https://debuginfod.debian.net/"
+	DEBUGINFO=$(debuginfod-find debuginfo "$1")
+elif [[ $# == 2 ]]; then
+	DEBUGINFO="$2"
+else
+	echo $0 [elf] [optional debuginfo file]
 	exit 1
 fi
 
-export DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/ https://debuginfod.debian.net/"
-SYMBOLS=$(debuginfod-find debuginfo "$1")
-eu-unstrip "$1" "$SYMBOLS" -o "$1"
+eu-unstrip "$1" "$DEBUGINFO" -o "$1"
