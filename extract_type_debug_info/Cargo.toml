@@ -1,0 +1,10 @@
+[package]
+name = "extract_type_debug_info"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.96"
+clap = { version = "4.5.31", features = ["derive"] }
+gimli = { git = "https://github.com/teapotd/gimli.git", branch = "partial-convert" }
+object = { version = "0.36.7", features = ["write"] }

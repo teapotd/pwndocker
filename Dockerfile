@@ -95,8 +95,9 @@ RUN python3 -m compileall /usr/lib/python3 /root
 RUN echo "export PATH=/root/scripts:/root/.cargo/bin::$PATH" >> ~/.bashrc
 COPY gdbinit /root/.gdbinit
 COPY tmux.conf /root/.tmux.conf
-COPY scripts /root/scripts
 COPY gdb-extras /root/gdb-extras
+COPY scripts /root/scripts
+COPY extract_type_debug_info/target/release/extract_type_debug_info /root/scripts
 
 WORKDIR /ctf/
 ENV PWNDBG_NO_AUTOUPDATE=1
