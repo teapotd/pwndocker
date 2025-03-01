@@ -49,6 +49,9 @@ RUN dpkg --add-architecture i386 && \
         flex \
         libelf-dev \
         libncurses-dev \
+        linux-headers-generic \
+        clangd \
+        wine \
         tzdata && \
     rm -rf /var/lib/apt/list/*
 
@@ -89,6 +92,9 @@ RUN git clone --depth 1 https://github.com/zolutal/pwn_gadget ~/pwn_gadget && \
 
 RUN git clone --depth 1 https://github.com/marin-m/vmlinux-to-elf.git ~/vmlinux-to-elf && \
     python3 -m pip install --no-cache-dir ~/vmlinux-to-elf/
+
+RUN cd /tmp && wget https://github.com/0vercl0k/rp/releases/download/v2.1.4/rp-lin-gcc.zip && \
+    unzip rp-lin-gcc.zip && mv /tmp/rp-lin /usr/bin/rp++ && rm -rf /tmp/*
 
 RUN python3 -m compileall /usr/lib/python3 /root
 
