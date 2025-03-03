@@ -21,7 +21,7 @@ class KernelSymbols(gdb.Command):
             print('Unable to locate the kernel base')
             return
 
-        gdb.execute('set $kbase={}'.format(hex(base)))
+        gdb.set_convenience_variable('kbase', base)
 
         # Relocate all sections properly (https://stackoverflow.com/a/33087762)
         with open(args, 'rb') as f:
