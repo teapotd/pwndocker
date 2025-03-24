@@ -52,6 +52,7 @@ RUN dpkg --add-architecture i386 && \
         linux-headers-generic \
         clangd \
         wine \
+        hashcash \
         tzdata && \
     rm -rf /var/lib/apt/list/*
 
