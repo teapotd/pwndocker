@@ -96,7 +96,7 @@ RUN cd /tmp && wget https://github.com/0vercl0k/rp/releases/download/v2.1.4/rp-l
 
 RUN python3 -m compileall /usr/lib/python3 /root
 
-RUN echo "export PATH=/root/scripts:/root/.cargo/bin::$PATH" >> ~/.bashrc
+RUN echo "export PATH=/root/scripts:/root/.cargo/bin:$PATH" >> ~/.bashrc
 COPY gdbinit /root/.gdbinit
 COPY tmux.conf /root/.tmux.conf
 COPY gdb-extras /root/gdb-extras
