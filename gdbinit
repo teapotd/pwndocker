@@ -1,4 +1,3 @@
-source ~/pwn_gadget/pwn_gadget.py
 source ~/pwndbg/gdbinit.py
 source ~/Pwngdb/.gdbinit
 
