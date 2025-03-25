@@ -39,6 +39,7 @@ RUN dpkg --add-architecture i386 && \
         python3-distutils \
         bison \
         rpm2cpio cpio \
+        p7zip-full p7zip-rar \
         zstd \
         qemu-user \
         qemu-system \
