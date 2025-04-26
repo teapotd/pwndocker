@@ -89,6 +89,8 @@ RUN git clone --depth 1 https://github.com/teapotd/pwndbg ~/pwndbg && \
 RUN git clone --depth 1 https://github.com/scwuaptx/Pwngdb.git ~/Pwngdb && \
     cd ~/Pwngdb && sed -i "s?source ~/peda/peda.py?# source ~/peda/peda.py?g" .gdbinit
 
+RUN git clone --depth 1 https://github.com/xf1les/muslheap.git ~/muslheap
+
 RUN git clone --depth 1 https://github.com/marin-m/vmlinux-to-elf.git ~/vmlinux-to-elf && \
     python3 -m pip install --no-cache-dir ~/vmlinux-to-elf/
 

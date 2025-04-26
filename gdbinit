@@ -1,5 +1,6 @@
 source ~/pwndbg/gdbinit.py
 source ~/Pwngdb/.gdbinit
+source ~/muslheap/muslheap.py
 
 source ~/gdb-extras/autoexit.py
 source ~/gdb-extras/layout.py
