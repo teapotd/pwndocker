@@ -1,11 +1,11 @@
-FROM phusion/baseimage:jammy-1.0.4
+FROM phusion/baseimage:noble-1.0.2
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Warsaw
 
 RUN dpkg --add-architecture i386 && \
     apt-get -y update && \
-    apt install -y --fix-missing \
+    apt-get install -y --fix-missing \
         libc6:i386 \
         libc6-dbg:i386 \
         libc6-dbg \
@@ -30,13 +30,12 @@ RUN dpkg --add-architecture i386 && \
         wget \
         gdb \
         gdb-multiarch \
-        netcat \
+        netcat-openbsd \
         socat \
         git \
         patchelf \
         gawk \
         file \
-        python3-distutils \
         bison \
         rpm2cpio cpio \
         p7zip-full p7zip-rar \
@@ -62,7 +61,7 @@ RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-RUN python3 -m pip install -U pip && \
+RUN rm /usr/lib/python*/EXTERNALLY-MANAGED && \
     python3 -m pip install --no-cache-dir \
         ropgadget \
         z3-solver \

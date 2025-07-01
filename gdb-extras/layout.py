@@ -80,7 +80,7 @@ class TmuxLayout(gdb.Command):
         top_left = split('-fvbl 30')
         if show_src:
             top_right = split('-hl 88 -t ' + top_left[0])
-        top_middle = split('-hp 50 -t ' + top_left[0])
+        top_middle = split('-hl 50% -t ' + top_left[0])
 
         contextoutput('legend', top_left[1], True, 'none')
         contextoutput('regs', top_left[1], True, 'none')
