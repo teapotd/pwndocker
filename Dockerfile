@@ -97,9 +97,13 @@ RUN git clone --depth 1 https://github.com/marin-m/vmlinux-to-elf.git ~/vmlinux-
 RUN cd /tmp && wget https://github.com/0vercl0k/rp/releases/download/v2.1.4/rp-lin-gcc.zip && \
     unzip rp-lin-gcc.zip && mv /tmp/rp-lin /usr/bin/rp++ && rm -rf /tmp/*
 
+RUN wget https://github.com/io12/pwninit/releases/download/3.3.1/pwninit -O /usr/bin/pwninit && \
+    chmod +x /usr/bin/pwninit
+
 RUN python3 -m compileall /usr/lib/python3 /root
 
 RUN echo "export PATH=/root/scripts:/root/.cargo/bin:$PATH" >> ~/.bashrc
+RUN echo "alias pwninit='pwninit --no-template'" >> ~/.bashrc
 COPY gdbinit /root/.gdbinit
 COPY tmux.conf /root/.tmux.conf
 COPY gdb-extras /root/gdb-extras
